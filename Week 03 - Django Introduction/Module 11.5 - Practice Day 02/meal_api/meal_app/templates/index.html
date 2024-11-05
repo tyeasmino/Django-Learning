@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block mainContent %}
+
+<div class="container">
+    <div class="row my-5">
+        {% for i in data %}
+        <div class="col-4 my-2">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ i.strMealThumb }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.strMeal }}</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                        content. This content is a little bit longer.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock mainContent %}

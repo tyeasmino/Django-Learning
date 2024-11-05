@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class=" w-50 m-auto  p-5">
+    <h3>Contact Form using <a target="_blank" href="https://www.geeksforgeeks.org/django-forms/"> <img src="https://media.geeksforgeeks.org/gfg-gg-logo.svg"> </a> </h3>
+    {% load crispy_forms_tags %}
+    <form method="post" action="">
+        
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn btn-success">Submit</button>
+
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,98 @@
+in module 
+-------------------
+post name
+post details
+author
+category
+edit 
+delete
+
+add author -  
+add category
+add post 
+
+
+
+my target
+--------------
+patient details 
+investigation details
+me
+dc
+edit 
+delete
+
+
+add marketing executive - name, designation, location, phone no, target amount, salary  
+add diagnostic center - name, location, marketing_executive  
+add investigation - patient name, age, test details, location, diagnostic center, bill, payment status      
+
+
+
+--------------------------------------
+# model
+
+
+from django.db import models
+
+class Survey(models.Model):
+    OPTION_A = 'A'
+    OPTION_B = 'B'
+    OPTION_C = 'C'
+    
+    OPTIONS = [
+        (OPTION_A, 'Option A'),
+        (OPTION_B, 'Option B'),
+        (OPTION_C, 'Option C'),
+    ]
+
+    title = models.CharField(max_length=200)
+    selected_option = models.CharField(max_length=2, choices=OPTIONS)
+
+    def __str__(self):
+        return self.title
+
+
+
+
+
+# forms
+
+
+from django import forms
+from .models import Survey
+
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = Survey
+        fields = ['title', 'selected_option']
+
+
+
+
+
+
+
+
+# views
+
+
+from django.shortcuts import render, redirect
+from .models import Survey
+from .forms import SurveyForm
+
+def survey_create(request):
+    if request.method == 'POST':
+        form = SurveyForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the new survey
+            return redirect('survey_success')  # Redirect to a success page
+    else:
+        form = SurveyForm()
+    
+    return render(request, 'survey_form.html', {'form': form})
+
+def survey_success(request):
+    return render(request, 'survey_success.html')
+
+                                                        

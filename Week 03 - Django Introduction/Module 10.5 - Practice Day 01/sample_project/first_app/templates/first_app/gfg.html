@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning from gfg</title>
+</head>
+<body style="margin: 50px;">
+    <h1>Module 10.5 - Practice Day 01</h1>
+
+    <button style="padding: 10px 20px;"><a href="/first_app/gfg" style="text-decoration: none;"> Practice Link 1 </a></button> 
+    <button style="padding: 10px 20px; margin: 0 10px;"><a href="/first_app/earthly" style="text-decoration: none;"> Practice Link 2 </a></button> 
+    <hr>
+
+    Learning Link: <a href="https://www.geeksforgeeks.org/django-template-filters/" target="_blank"> Geeksforgeeks </a> 
+    <hr> 
+
+    <ul>
+        <li> 
+            <p> This list is: {{ lst }} and it's <strong>lenght</strong> is - {{ lst | length }}. </p>  
+        </li>
+        <li>
+            <p> The value: {{ example_add }} and after adding <strong>7</strong> the result is - {{ example_add | add:"7" }}. </p>
+        </li>
+        <li>
+            <p> The value: {{ example_addslashes }} and after using <strong>addslashes</strong> the result is - {{ example_addslashes | addslashes }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_capfirst }} and after using <strong>capfirst</strong> the result is - {{ example_capfirst | capfirst }}. </p> 
+        </li>
+        <li>
+            <p style="color: red;"> The value: {{ example_center }} and after using <strong>center</strong> the result is - {{ example_center | center:"15" }}. </p> 
+            <p style="margin-left: 100px;">*** No changed, I cannot understand</p>
+        </li>
+        <li>
+            <p> The value: {{ example_cut }} and after using <strong>cut</strong> the result is - {{ example_cut | cut:" " }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_date }} and after using <strong>date</strong> the result is - {{ example_date | date:"D d M Y" }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_default }} and after using <strong>default</strong> the result is - {{ example_default | default:"nothing" }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_dictsort }} <br> 
+                and after using <strong>dictsort based on name</strong> the result is - {{ example_dictsort | dictsort:"name" }} <br>
+                and after using <strong>dictsort based on age</strong> the result is - {{ example_dictsort | dictsort:"age" }} <br>
+            </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_divisibleby }} and after using <strong>divisibleby by 3</strong> the result is - {{ example_divisibleby | divisibleby:"3" }}. </p> 
+            <p> The value: {{ example_divisibleby }} and after using <strong>divisibleby by 4</strong> the result is - {{ example_divisibleby | divisibleby:"4" }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_filesizeformat }} and after using <strong>filesizeformat</strong> the result is - {{ example_filesizeformat | filesizeformat }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ lst }} and after using <strong>first</strong> the result is - {{ lst | first }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ lst }} and after using <strong>join</strong> the result is - {{ lst | join:" // " }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ lst }} and after using <strong>last</strong> the result is - {{ lst | last }}. </p> 
+        </li>
+        <li>
+            <p style="color: red;"> <strong>***linenumbers </strong> - not understand  </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_cut }} and after using <strong>lower</strong> the result is - {{ example_cut | lower }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_capfirst }} and after using <strong>make_list on string</strong> the result is - {{ example_capfirst | make_list }}. </p> 
+            <p> The value: {{ example_divisibleby }} and after using <strong>make_list on integer</strong> the result is - {{ example_divisibleby | make_list }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ lst }} and after using <strong>random</strong> the result is - {{ lst | random }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ lst }} and after using <strong>slice</strong> the result is - {{ lst | slice:":2" }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_slugify }} and after using <strong>slugify</strong> the result is: {{ example_slugify | slugify }}. </p> 
+        </li>
+        <li>
+            <p style="color: red;"> <strong>***timesince </strong> - not understand  </p>
+        </li>
+        <li>
+            <p> The value: {{ example_slugify }} and after using <strong>title</strong> the result is: {{ example_slugify | title }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_unordered_list }} and after using <strong>unordered_list</strong> the result is: {{ example_unordered_list | unordered_list }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_cut }} and after using <strong>upper</strong> the result is: {{ example_cut | upper }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ example_cut }} and after using <strong>wordcount</strong> the result is: {{ example_cut | wordcount }}. </p> 
+        </li>
+    </ul>
+     
+</body>
+</html>

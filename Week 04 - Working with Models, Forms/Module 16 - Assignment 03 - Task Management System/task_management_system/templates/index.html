@@ -1,0 +1,33 @@
+{% extends "base.html" %} 
+{% block title %} Task Management System {% endblock title %} 
+
+{% block content %}
+<div class="container p-5">
+  <div class="row">
+    {% for t in task %}
+    <div class="card m-2" style="width: 24rem">
+      <div class="card-body">
+        <h5 class="card-title">{{ t.task_title }}</h5>
+        <p class="card-text">
+          <strong>Details:</strong> {{ t.task_description }} <br />
+          <strong>Assigned Date:</strong> {{ t.task_assign_date }} <br />
+          <strong>Category:</strong>
+          {% for cat in t.task_category.all %}
+            <button class="btn btn-sm btn-secondary m-1" disabled>
+                {{ cat.category_name }}
+            </button>
+          {% endfor %}
+        </p>
+        {% if t.task_is_completed %}
+            <button class="btn btn-success" disabled>Completed</button>
+        {% else %}
+            <a href=" {% url 'edit_task' t.pk %} " class="btn btn-warning">Edit</a>
+            <a href=" {% url 'delete_task' t.pk %} " class="btn btn-danger">Delete</a> 
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

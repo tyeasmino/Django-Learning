@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class=" w-50 m-auto  p-5">
+    <h3>Contact Form using <a target="_blank" href="https://ordinarycoders.com/blog/article/using-django-form-fields-and-widgets"> <img src="https://ordinarycoders.com/_next/image?url=https%3A%2F%2Fd2gdtie5ivbdow.cloudfront.net%2Fstatic%2Fimg%2Fordinarycoders_logo.png&w=256&q=75"> </a> </h3>
+    {% load crispy_forms_tags %}
+    <form method="post" action="">
+        
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn btn-success">Submit</button>
+
+    </form>
+</div>
+
+{% endblock content %}

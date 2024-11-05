@@ -1,0 +1,47 @@
+{% extends "./base.html" %} 
+
+{% block title %} Profile - Project 8 {% endblock title %} 
+
+{% block content %} 
+  {% if messages %} 
+    {% for m in messages %} 
+      {% comment %} conditional css {% endcomment %} {% comment %}
+      <small {% if m.tags %} class="{{m.tags}}" {% endif %}> {{ m }} </small> {% endcomment %}
+
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong> Hello {{ user }}, {{m}} </strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+
+    {% endfor %} 
+  {% endif %} 
+
+  <br> 
+  <p> <a class="btn btn-info" href="{% url 'pass_change' %}">Change Your Password</a>   <a class="btn btn-warning" href="{% url 'pass_change2' %}">Change Your Password - Without OLD Password</a>  </p>
+ 
+
+  {% load crispy_forms_tags %}
+  <form method="post" novalidate class="w-50 m-auto"> 
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        {% for er in form.non_field_errors %}
+            <p class="bg-danger text-white p-3">{{ er }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <!-- {{ form | crispy }} -->
+    {% for fm in form %}
+        {{ fm.label_tag }}
+        {{ fm }}
+        {{ fm.errors | striptags }}           
+    {% endfor %}
+    <br> 
+    <button class="btn btn-success">Update Info</button>
+</form>
+{% endblock content %}

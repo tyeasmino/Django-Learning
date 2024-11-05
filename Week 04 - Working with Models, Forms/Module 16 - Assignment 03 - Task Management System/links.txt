@@ -1,0 +1,21 @@
+1. Practice 14.5 github : 
+
+https://github.com/tyeasmino/Django_Course/tree/main/Week%2004%20-%20Working%20with%20Models%2C%20Forms/Module%2014.5%20-%20Practice%20from%20documentations/module14_5
+
+2. Practice 15.5 github : 
+
+https://github.com/tyeasmino/Django_Course/tree/main/Week%2004%20-%20Working%20with%20Models%2C%20Forms/Module%2015.5%20-%20Musician%20Directory%20Project/musicians_directory 
+ 
+3. Doc File : 
+
+https://docs.google.com/document/d/1wwL_xF5qJRTu1HgcziJTwC3iVU4qNW7I6vmKLBKRrR8/edit?usp=sharing
+
+4. Assignment 3 github: 
+
+https://github.com/tyeasmino/Django_Course/tree/main/Week%2004%20-%20Working%20with%20Models%2C%20Forms/Module%2016%20-%20Assignment%2003%20-%20Task%20Management%20System/task_management_system 
+
+
+for both projects
+----------------------
+admin username: admin
+admin password: admin

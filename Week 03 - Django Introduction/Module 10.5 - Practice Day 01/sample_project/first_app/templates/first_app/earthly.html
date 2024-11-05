@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning from earthly</title>
+</head>
+<body style="margin: 50px;">
+    <h1>Module 10.5 - Practice Day 01</h1>
+
+    <a href="/first_app/gfg" style="text-decoration: none;"><button style="padding: 10px 20px;"> Practice Link 1 </button> </a>
+    <a href="/first_app/earthly" style="text-decoration: none;"> <button style="padding: 10px 20px; margin: 0 10px;"> Practice Link 2 </button>  </a>
+    <hr>
+
+    Learning Link: <a href="https://earthly.dev/blog/django-template-filters/" target="_blank"> EarthlyDev </a> 
+    <hr> 
+
+    <ul> 
+        <li>
+            <p> The list is - **{{ lst }}, the output using <strong>Join</strong> Filter is: {{ lst | join:" & " }}. </p> 
+        </li>
+        <li>
+            <p> The Date is - **{{ date_filter }}, the output using <strong>Date formate </strong> Filter is: {{ date_filter | date:"D d M Y" }}. </p> 
+        </li>
+        <li>
+            <p> The Date is - **{{ date_filter }}, the output using <strong>Short Date</strong> Filter is: {{ date_filter | date:"SHORT_DATE_FORMAT" }}. </p> 
+        </li>
+        <li>
+            <p> The Date is - **{{ date_filter }}, the output using <strong>Date</strong> Filter is: {{ date_filter | date }}. </p> 
+        </li>
+        <li>
+            <p> The value: {{ defaults }} and output using <strong>default</strong> Filter is - {{ defaults | default:"nothing" }}. </p>
+        </li>
+        <li>
+            <p> The Date is - **{{ addhere }}, the output using <strong>Add</strong> Filter is: {{ addhere | add:"5" }}. </p> 
+        </li>
+        <li>
+            <p> The word is - **{{ capfirstMe }}, the output using <strong>Capfirst</strong> Filter is: {{ capfirstMe | capfirst }}. </p> 
+        </li>
+        <li>
+            <p> The line is - **{{ cutMe }}, the output using <strong>Cut</strong> Filter is: {{ cutMe | cut:" " }}. </p> 
+        </li>
+        <li>
+            <p style="color: red"> The less than sign is - **{{ sign }}, the output using <strong>Escape</strong> Filter is: {{ sign | escape }}. </p>
+            <p> Not working or i cannot understand it</p> 
+        </li>
+        <li>
+            <p> The data is - **{{ lst }}, the output using <strong>First</strong> Filter is: {{ lst | first }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ lst }}, the output using <strong>Last</strong> Filter is: {{ lst | last }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ capfirstMe }}, the output using <strong>Length</strong> Filter is: {{ capfirstMe | length }}. </p> 
+        </li>
+        <li>
+            <p style="color: red"> The <strong>Linenumbers</strong> Filter is not clear to me </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ lowerMe }}, the output using <strong>Lower</strong> Filter is: {{ lowerMe | lower }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ cutMe }}, the output using <strong>Upper</strong> Filter is: {{ cutMe | upper }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ cutMe }}, the output using <strong>Title</strong> Filter is: {{ cutMe | title }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ lst }}, the output using <strong>Random</strong> Filter is: {{ lst | random }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ lst }}, the output using <strong>Slice</strong> Filter is: {{ lst | slice:"2" }}. </p> 
+        </li>
+        <li>
+            <p> The time is - **{{ date_filter }}, the output using <strong>Time</strong> Filter is: {{ date_filter | time:"H:i" }}. </p> 
+        </li>
+        <li>
+            <p style="color: red"> The <strong>Timesince</strong> Filter is not clear to me </p> 
+        </li>
+
+        <li>
+            <p> The data is - **{{ lowerMe }}, the output using <strong>Truncatechars</strong> Filter is: {{ lowerMe | truncatechars:6 }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ word }}, the output using <strong>Wordcount</strong> Filter is: {{ word | wordcount }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ word }}, the output using <strong>Truncatewords</strong> Filter is: {{ word | truncatewords:3 }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ checkStriptags }}, the output using <strong>Striptags</strong> Filter is: {{ checkStriptags | striptags }}. </p> 
+            <p style="color: red">Striptags not clear</p>
+        </li>
+        <li>
+            <p> If data is - **{{ msgCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgCnt}} call{{ msgCnt | pluralize }}. </p> 
+            <p> Or if data is - **{{ msgsCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgsCnt}} call{{ msgsCnt | pluralize }}. </p> <br> 
+            <p> If data is - **{{ msgCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgCnt}} tomato{{ msgCnt | pluralize }}. </p> 
+            <p> Or if data is - **{{ msgsCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgsCnt}} tomato{{ msgsCnt | pluralize:"es" }}. </p> <br> 
+            <p> If data is - **{{ msgCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgCnt}} cherr{{ msgCnt | pluralize:"y,ies" }}. </p> 
+            <p> Or if data is - **{{ msgsCnt }}, the output using <strong>Pluralize</strong> Filter is: You have {{ msgsCnt}} cherr{{ msgsCnt | pluralize:"y,ies" }}. </p> 
+        </li>
+        <li>
+            <p> The data is - **{{ capfirstMe }}, the output using <strong>Make_list</strong> Filter is: {{ capfirstMe | make_list }}. </p> 
+        </li>
+    </ul>    
+</body>
+</html>
