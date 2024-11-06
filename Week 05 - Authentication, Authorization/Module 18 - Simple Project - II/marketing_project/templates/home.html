@@ -1,17 +1,65 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="container my-3">
-    <h3>List of Investigations</p>
-    <div class="row">
 
-        {% comment %} {% for i in investigationData %}
+
+
+<div class="">
+    <h3 class="py-3 ">List of Marketing Executive</p>
+    <div class="row">
+      {% for i in profileData %}
+        <div class="col-sm-4 my-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"> {{i.designation}} of  <button class="btn btn-sm btn-secondary" disabled> {{i.location}} </button>  </h5>
+              <p class="card-text">
+                  <p>{{i.name}}</p>
+                  <p> {{i.salary}} </p> 
+              </p>
+              <a href=" {% url 'edit_profile' i.id %} " class="btn btn-primary"> Edit </a>
+              <a href="{% url 'delete_profile' i.id %} " class="btn btn-danger"> Delete </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}       
+</div>
+
+
+<div class=" px-5  d-flex flex-wrap">
+  <div class="col-2 bg-white p-3">
+    <h5>All Locations </h5> 
+    {% for i in locationData %}
+    <div class="form-check">
+ 
+        <a href=" {% url 'location_wise_investigation' i.slug %} " style="font-size: 18px" class="btn btn-outline-secondary"> {{ i.name }}</a>
+ 
+    </div>
+    {% endfor %}
+  </div>
+  
+  
+  
+  <div class="col-10 p-3"> 
+    <div class=" my-3">
+      <div class="d-flex justify-content-between">
+        <h3>List of Investigations</h3>
+        <h4> <span class="text-primary"> {{ investigationData | length }}  </span> investigations found </h4>
+      </div>
+      <div class="row">
+        {% for i in investigationData %}
           <div class="col-sm-3 my-3">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"> {{i.location.name}}  </h5>
+                <div class="card-title"> 
+                  <div class="d-flex justify-content-between">
+                    <h5> {{i.location.name}} </h5>
+                    <h6 class="text-secondary"> {{i.marketing_executive }} </h6>
+                  </div>
+                  <h6  > {{i.diagnostic_center.name}} </h6>
+                </div>
                 <p class="card-text">
-                    <p> {{i.patient_name}} </p>
-                    <p> {{i.diagnostic_center.name}} </p> 
+                    <hr> 
+                    <p> {{i.patient_name}} - {{ i.age }}Y </p>
+                    
                     <button class="btn btn-info" disabled > {{i.test_details}} </button> 
                     <p class="d-flex justify-content-between mt-2"> {{i.rate}} 
                         {% if i.payment_status == 'D' %}
@@ -23,40 +71,16 @@
                             Paid
                         </button>
                         {% endif %}
-
                     </p> 
                 </p>
-                 
-                    
-                
               </div>
             </div>
           </div>
-        {% endfor %}         {% endcomment %}
-        
+        {% endfor %}       
+  </div>
+  </div>
 </div>
 
 
-<div class="container my-3">
-    <h3>List of Marketing Executive</p>
-    <div class="row">
-
-        {% for i in profileData %}
-        <div class="col-sm-4 my-3">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"> {{i.designation}} of  <button class="btn btn-sm btn-secondary" disabled> {{i.location}} </button>  </h5>
-                <p class="card-text">
-                    <p>{{i.name}}</p>
-                    <p> {{i.salary}} </p> 
-                </p>
-                <a href=" {% url 'edit_profile' i.id %} " class="btn btn-primary"> Edit </a>
-                <a href="{% url 'delete_profile' i.id %} " class="btn btn-danger"> Delete </a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}        
-        
-</div>
 
 {% endblock content %}

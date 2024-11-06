@@ -4,6 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required 
+from investigations.models import Investigation
 
 
 # Create your views here.
@@ -43,7 +44,8 @@ def user_login(request):
 
 @login_required 
 def profile(request):
-    return render(request, 'profile.html')
+    investigationData = Investigation.objects.filter(marketing_executive = request.user) 
+    return render(request, 'profile.html', {'investigationData': investigationData})
 
 @login_required 
 def edit_profile(request):
@@ -74,3 +76,9 @@ def change_pass(request):
         change_pass_form = PasswordChangeForm(request.user) 
     
     return render(request, 'password_change.html', {'form': change_pass_form})
+
+
+def user_logout(request):
+    logout(request)
+    messages.info(request, 'Logout Successfully!')
+    return redirect('user_login')
