@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div>
+    <a class="btn btn-primary" href=" {% url 'edit_profile'  %} "  >Edit your profile</a>
+</div>
+
+<div class="container my-3">
+    <h3>List of Investigations</p>
+    <div class="row">
+      {% for i in investigationData %}
+        <div class="col-sm-3 col-md-4 my-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"> {{i.location.name}}  </h5>
+              <div class="card-text">
+                  <p> {{i.patient_name}} </p>
+                  <p> {{i.diagnostic_center.name}} </p> 
+                  <p> ME: {{i.marketing_executive.first_name }} {{i.marketing_executive.last_name }} </p> 
+                  <button class="btn btn-secondary" disabled > {{i.test_details}} </button> 
+                  <br>
+
+                  {% if i.payment_status == 'D' %} 
+                        Status: <span class="text-danger"> Due</span>  
+                        <a href=" {% url 'edit_investigations' i.id %} " class="btn btn-primary"> Edit </a> 
+                        <a href=" {% url 'delete_investigations' i.id %} " class="btn btn-danger"> Delete </a> 
+                  {% else %}     
+                    Payment Status: <span class="text-success"> Paid</span> 
+                       {% endif %}
+                
+                  
+                </div>
+                
+                  
+              
+            </div>
+          </div>
+        </div>
+      {% endfor %}       
+</div>
+
+
+{% endblock content %}
