@@ -4,7 +4,7 @@ from . import forms
 from . import models
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required 
-
+from django.utils.decorators import method_decorator
 
 from django.views.generic import CreateView, UpdateView, DeleteView
 
@@ -27,6 +27,8 @@ def add_investigations(request):
     return render(request, 'add_investigations.html', {'form' : investigation_form})
 
 
+
+@method_decorator(login_required, name='dispatch')
 class addInvestigationCreateView(CreateView):
     model = models.Investigation
     form_class = forms.InvestigationForm
@@ -59,6 +61,8 @@ def edit_investigations(request, id):
     
     return render(request, 'edit_investigation.html', {'form' : investigation_form})
 
+
+@method_decorator(login_required, name='dispatch')
 class updateInvestigationUpdateView(UpdateView):
     model = models.Investigation
     form_class = forms.InvestigationForm
@@ -76,7 +80,7 @@ def delete_investigations(request, id):
     return redirect("profile") 
 
 
-
+@method_decorator(login_required, name='dispatch')
 class deleteInvestigationDeleteView(DeleteView):
     model = models.Investigation
     success_url = reverse_lazy('profile')
