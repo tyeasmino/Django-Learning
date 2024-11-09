@@ -19,7 +19,7 @@
                   <p> {{i.patient_name}} </p>
                   <p> {{i.diagnostic_center.name}} </p> 
                   <p> ME: {{i.marketing_executive.first_name }} {{i.marketing_executive.last_name }} </p> 
-                  <button class="btn btn-secondary" disabled > {{i.test_details}} </button> 
+                  <button class="btn btn-secondary" disabled > {{i.test_details}} - {{ i.rate }} </button> 
                   <br>
 
                   {% if i.payment_status == 'D' %} 

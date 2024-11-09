@@ -41,13 +41,20 @@
   <div class="col-10 p-3"> 
     <div class=" my-3">
       <div class="d-flex justify-content-between">
-        <h3>List of Investigations</h3>
+        <h3>List of Investigations
+
+          <ul>
+            <li>app er moddhe media folder e new images ase na</li>
+            <li>frontend theke image upload hoyna</li>
+          </ul>
+        </h3>
         <h4> <span class="text-primary"> {{ investigationData | length }}  </span> investigations found </h4>
       </div>
       <div class="row">
         {% for i in investigationData %}
           <div class="col-sm-3 my-3">
             <div class="card">
+              <img src=" {{ i.investigation_slip_img.url }} " class="card-img-top">
               <div class="card-body">
                 <div class="card-title"> 
                   <div class="d-flex justify-content-between">

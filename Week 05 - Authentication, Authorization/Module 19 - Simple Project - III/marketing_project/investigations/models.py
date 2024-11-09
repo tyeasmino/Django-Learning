@@ -14,6 +14,7 @@ class Investigation(models.Model):
     diagnostic_center = models.ForeignKey(Diagnostic_Center, on_delete=models.DO_NOTHING) 
     marketing_executive = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=None)
     rate = models.IntegerField()
+    investigation_slip_img = models.ImageField(upload_to='investigations/media/uploads/', blank=True, null = True)
  
     payment_options = [
         ('P', 'Paid'), 
