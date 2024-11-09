@@ -53,6 +53,7 @@
       <div class="row">
         {% for i in investigationData %}
           <div class="col-sm-3 my-3">
+           
             <div class="card">
               <img src=" {{ i.investigation_slip_img.url }} " class="card-img-top">
               <div class="card-body">
@@ -65,7 +66,7 @@
                 </div>
                 <p class="card-text">
                     <hr> 
-                    <p> {{i.patient_name}} - {{ i.age }}Y </p>
+                    <p>  <a class="text-decoration-none text-dark" href=" {% url 'detail_investigation' i.id %} "> {{i.patient_name}}  </a> - {{ i.age }}Y </p>
                     
                     <button class="btn btn-info" disabled > {{i.test_details}} </button> 
                     <p class="d-flex justify-content-between mt-2"> {{i.rate}} 
@@ -82,6 +83,7 @@
                 </p>
               </div>
             </div>
+
           </div>
         {% endfor %}       
   </div>

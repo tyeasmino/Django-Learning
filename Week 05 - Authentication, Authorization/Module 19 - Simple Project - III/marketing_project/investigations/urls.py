@@ -11,4 +11,7 @@ urlpatterns = [
     
     # path('delete/<int:id>', views.delete_investigations, name='delete_investigations'), 
     path('delete/<int:id>/', views.deleteInvestigationDeleteView.as_view(), name='delete_investigations'), 
+    
+    
+    path('details/<int:pk>/', views.DetailInvestigationView.as_view(), name='detail_investigation'), 
 ]

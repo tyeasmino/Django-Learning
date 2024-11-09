@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required 
 from django.utils.decorators import method_decorator
 
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 # Create your views here.
 @login_required
@@ -86,4 +86,11 @@ class deleteInvestigationDeleteView(DeleteView):
     success_url = reverse_lazy('profile')
     template_name = 'delete_investigation.html'
     pk_url_kwarg = 'id' 
+
+
+
+class DetailInvestigationView(DetailView):
+    model = models.Investigation
+    template_name = 'investigation_details.html'
+    
 

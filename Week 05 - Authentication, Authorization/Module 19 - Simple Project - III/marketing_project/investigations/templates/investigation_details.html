@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-6 p-5">
+        <div class="card">
+          <img src=" {{ investigation.investigation_slip_img.url }} " class="card-img-top ">
+          <div class="card-body">
+            <div class="card-title"> 
+              <div class="d-flex justify-content-between">
+                <h5> {{investigation.location.name}} </h5>
+                <h6 class="text-secondary"> {{investigation.marketing_executive }} </h6>
+              </div>
+              <h6  > {{investigation.diagnostic_center.name}} </h6>
+            </div>
+            <p class="card-text">
+                <hr> 
+                <p> {{investigation.patient_name}} - {{ investigation.age }}Y </p>
+                
+                <button class="btn btn-warning" disabled > {{investigation.test_details}} </button> 
+                <p class="d-flex justify-content-between mt-2"> {{investigation.rate}} 
+                    {% if investigation.payment_status == 'D' %}
+                    <a href="#" class="btn btn-danger">
+                        Due
+                    </a>
+                    {% else %}
+                    <button class="btn btn-success" disabled>
+                        Paid
+                    </button>
+                    {% endif %}
+                </p> 
+            </p>
+          </div>
+        </div>
+    </div>
+    
+    
+    <div class="col-6 p-5">
+         comments 
+    </div>
+</div>
+
+{% endblock content %}
