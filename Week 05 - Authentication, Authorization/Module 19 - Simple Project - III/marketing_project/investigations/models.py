@@ -30,7 +30,7 @@ class Investigation(models.Model):
 class Comment(models.Model):
     investigation = models.ForeignKey(Investigation, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=30)
-    email = models.EmailField(unique=True)
+    email = models.EmailField()
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True) 
 

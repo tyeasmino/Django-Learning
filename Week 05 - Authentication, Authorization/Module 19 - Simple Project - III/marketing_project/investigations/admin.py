@@ -4,3 +4,4 @@ from . import models
 
 
 admin.site.register(models.Investigation) 
+admin.site.register(models.Comment) 

@@ -35,9 +35,20 @@
         </div>
     </div>
     
-    
     <div class="col-6 p-5">
-      <div class="card">
+      <div class="card m-1">
+        <div class="card-body ">        
+          <h5>Total Comments : {{ comments | length }}</h5>
+          
+          {% for comment in comments %}
+          <div class="card-body border border-2 p-2 my-1">        
+            <strong> {{ comment.name }} </strong> -  <span> {{ comment.created_on }} </span> 
+            <p> {{ comment.body }} </p> 
+          </div>
+          {% endfor %}
+      </div>
+    
+      <div class="card m-1">
         <div class="card-body">
           
           <form method="POST"  >
@@ -47,19 +58,7 @@
             {{comment_form | crispy}}
         
             <button class="btn btn-primary">Comment</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-6 p-5">
-      <div class="card">
-        <div class="card-body">
-        
-          Total Comments : {{ comments | length }}
-
-        {% for comment in comments %}
-          <p> {{ comment.name }} </p> 
-        {% endfor %}
+          </form>
       </div>
     </div>
 </div>
