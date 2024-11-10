@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div class="row">
@@ -37,7 +37,30 @@
     
     
     <div class="col-6 p-5">
-         comments 
+      <div class="card">
+        <div class="card-body">
+          
+          <form method="POST"  >
+            <h1>Add Comment</h1>
+        
+            {% csrf_token %}
+            {{comment_form | crispy}}
+        
+            <button class="btn btn-primary">Comment</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-6 p-5">
+      <div class="card">
+        <div class="card-body">
+        
+          Total Comments : {{ comments | length }}
+
+        {% for comment in comments %}
+          <p> {{ comment.name }} </p> 
+        {% endfor %}
+      </div>
     </div>
 </div>
 
