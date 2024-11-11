@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Musicians Directory</title>
+{% endblock title %}
+
+
+{% block content %} 
+    <div class="container p-5">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Musician Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Album Rating</th>
+                <th scope="col">Instrument Type</th>
+                <th scope="col">Album Name</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                {% for i in albumData %}
+                    <tr> 
+                        <th scope="row"> {{ i.pk }} </th> 
+                        <td> <a class="text-black text-decoration-none fw-semibold" href=" {% url 'edit_Musician' i.musician.id %} "> {{ i.musician }} </a> </td> 
+                        <td> {{ i.musician.email }} </td> 
+                        <td> {{ i.album_rating }} </td>
+                        <td> {{ i.musician.instrument_type }} </td>
+                        <td> {{ i.album_name }} </td>
+                        <td> {{ i.album_release_date }} </td>
+                        <td> 
+                            <a href="{% url 'edit_Album' i.pk %}" class="text-black fw-bold btn btn-warning">Edit</a>
+                            <a href="{% url 'delete_Musician' i.musician.id %}" class="text-white fw-bold btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+          </table>
+    </div>
+ 
+{% endblock content %}
