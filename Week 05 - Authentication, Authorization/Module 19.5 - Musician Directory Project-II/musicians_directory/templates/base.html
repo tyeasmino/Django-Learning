@@ -9,31 +9,47 @@
   <body>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'index' %}">Musicians Directory</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
- 
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'add_Musician' %}">Add Musicians</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'add_Album' %}">Add Album</a>
-              </li>
-                
-            </ul>
-            <div class="d-flex"> 
-              <button class="mx-1 btn btn-warning" type="submit"> <a class="nav-link " href="{% url 'add_Album' %}">Register</a>  </button>
-              <button class="mx-1 btn btn-success" type="submit"> <a class="nav-link" href="{% url 'add_Album' %}">Login</a>  </button>
-              <button class="mx-1 btn btn-secondary" type="submit"> <a class="nav-link " href="{% url 'add_Album' %}">Profile</a>  </button>
-              <button class="mx-1 btn btn-danger" type="submit"> <a class="nav-link" href="{% url 'add_Album' %}">Logout</a> </button>
-            </div>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Musicians Directory</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'add_Musician' %}">Add Musicians</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_Album' %}">Add Album</a>
+            </li>
+            {% endif %}
+          </ul>
+          <div class="d-flex"> 
+            {% if request.user.is_authenticated %}
+              <button class="mx-1 btn btn-secondary" type="submit"> <a class="nav-link " href="{% url 'user_profile' %}">Profile</a>  </button>
+              
+              <form method="post" action="{% url 'user_logout' %}"> 
+                {% csrf_token %}
+                <button class="mx-1 btn btn-danger" type="submit"> Logout </button>
+              </form>
+            {% else %}            
+              <button class="mx-1 btn btn-warning" type="submit"> <a class="nav-link " href="{% url 'register' %}">Register</a>  </button>
+              <button class="mx-1 btn btn-success" type="submit"> <a class="nav-link" href="{% url 'user_login' %}">Login</a>  </button>
+            {% endif %}
           </div>
         </div>
-      </nav>
+      </div>
+    </nav>
+    
+
+    {% for i in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong> {{ i }} </strong> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+
     
     {% block content %} {% endblock content %}
     
