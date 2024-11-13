@@ -11,6 +11,6 @@
 {% block content %}
     <div class="row">
         <h2 class="my-5"> Welcome to Epic Rides - {{ request.user }} </h2>
-         
+        {{ form | crispy }}
     </div> 
 {% endblock content %}

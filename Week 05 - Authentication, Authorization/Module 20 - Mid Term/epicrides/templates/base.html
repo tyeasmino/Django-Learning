@@ -38,7 +38,7 @@
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href=" {% url 'profile' %} ">Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Update Profile</a></li>
+                      <li><a class="dropdown-item" href=" {% url 'edit_profile' %} ">Update Profile</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="#">Change Password</a></li>
                     </ul>
@@ -67,7 +67,7 @@
       {% block content %}    {% endblock content %}
     </div>
 
-    <footer class="">
+    <footer class="mt-5">
       <nav class="navbar bg-body-tertiary">
         <div class="container">
           <h6 class="navbar-text w-100 text-center ">
