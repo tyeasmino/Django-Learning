@@ -13,7 +13,6 @@ class RegistrationForm(UserCreationForm):
         fields = [ 'username', 'first_name', 'last_name', 'email']
 
 
-
 class MusiciansForm(forms.ModelForm):
     
     class Meta:

@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages 
 from django.contrib.auth.views import LoginView, LogoutView 
-
+from django.contrib.auth.models import User
 
 @method_decorator(login_required, name='dispatch')
 class AddMusicianCreateView(CreateView):
@@ -44,19 +44,23 @@ class ProfileView(CreateView):
     template_name = 'musician/profile.html'
 
 
-def register(request):
-    if request.method == 'POST':
-        register_form = RegistrationForm(request.POST)
-        if register_form.is_valid():
-            register_form.save()
-            messages.success(request, 'Account Created Successfully!')
-            return redirect('register')
-    
-    else:
-        register_form = RegistrationForm()
-    
-    return render(request, 'musician/register.html', {'form': register_form, 'type' : 'Register'})
+class userRegister(CreateView):
+    model = User
+    form_class = RegistrationForm
+    template_name = "musician/register.html"
+    success_url = reverse_lazy('register')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Account created successfully!')
+        return super().form_valid(form)
+
+    def form_invalid(self, form): 
+        return super().form_invalid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["type"] = 'Register'
+        return context
     
 
 class UserLoginView(LoginView):
