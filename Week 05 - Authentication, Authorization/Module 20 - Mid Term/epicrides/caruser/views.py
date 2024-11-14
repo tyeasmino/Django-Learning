@@ -58,33 +58,23 @@ class CarUserLogoutCreateView(LogoutView):
 @method_decorator(login_required, name='dispatch')
 class CarUserProfileCreateView(CreateView):
     model = User
-    form_class = forms.CarUserRegistrationForm
+    form_class = forms.CarUserUpdateInfofForm
     template_name = 'user_profile.html'
 
-
-
-@login_required 
-def edit_profile(request):
-    if request.method == 'POST':
-        profile_form = forms.ChangeUserInfoForm(request.POST, instance = request.user) 
-        if profile_form.is_valid():
-            profile_form.save()
-            messages.success(request, 'Profile Updated Successfully!')
-            return redirect('profile')
-    
-    else:
-        profile_form = forms.ChangeUserInfoForm(instance = request.user) 
-    
-    return render(request, 'update_profile.html', {'form': profile_form})
-
-
+ 
 
 @method_decorator(login_required, name='dispatch')
 class CarUserEditProfile(UpdateView):
     model = User
-    form_class = forms.CarUserRegistrationForm
+    form_class = forms.CarUserUpdateInfofForm
     template_name = 'user_profile.html'
     success_url = reverse_lazy('profile')
 
     def get_object(self, queryset = None):
         return self.request.user 
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["pageTitle"] = 'update'
+        return context

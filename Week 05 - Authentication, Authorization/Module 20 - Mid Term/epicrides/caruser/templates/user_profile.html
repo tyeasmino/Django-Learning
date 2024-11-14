@@ -9,8 +9,21 @@
 
 
 {% block content %}
-    <div class="row">
-        <h2 class="my-5"> Welcome to Epic Rides - {{ request.user }} </h2>
-        {{ form | crispy }}
-    </div> 
+
+
+<div class="row">
+    <h2 class="my-5 text-center"> Welcome to Epic Rides  </h2>
+    
+    {% if pageTitle == 'update' %}  
+        <form class="col-6 m-auto" method="post">
+            <label class="form-label">Username</label>
+            <input class="form-control" value=" {{ request.user }} " disabled >
+            <br>
+            {{ form | crispy }}
+            {% csrf_token %}
+            <button class="btn btn-success" type="Submit">Update</button>
+        </form>
+    {% endif %}
+</div> 
+
 {% endblock content %}
