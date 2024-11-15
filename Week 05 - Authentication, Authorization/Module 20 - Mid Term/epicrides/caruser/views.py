@@ -1,12 +1,18 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
-from . import forms, models
-from django.views.generic import CreateView, UpdateView, DeleteView 
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required 
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from . import forms, models
 from django.contrib import messages
+
+from django.contrib.auth import update_session_auth_hash 
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.decorators import login_required
+
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, UpdateView, DeleteView 
+
+
 
 # Create your views here.
 class CarUserRegistrationCreateView(CreateView):
@@ -54,7 +60,6 @@ class CarUserLogoutCreateView(LogoutView):
         return reverse_lazy('signin')
 
 
-
 @method_decorator(login_required, name='dispatch')
 class CarUserProfileCreateView(CreateView):
     model = User
@@ -62,7 +67,6 @@ class CarUserProfileCreateView(CreateView):
     template_name = 'user_profile.html'
 
  
-
 @method_decorator(login_required, name='dispatch')
 class CarUserEditProfile(UpdateView):
     model = User
@@ -78,3 +82,24 @@ class CarUserEditProfile(UpdateView):
         context = super().get_context_data(**kwargs)
         context["pageTitle"] = 'update'
         return context
+
+ 
+
+@login_required
+def update_pass(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PasswordChangeForm(user=request.user, data= request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                messages.success(request, "Password updated successfully!!")
+                return redirect('profile')
+            
+        else:
+            form = PasswordChangeForm(user=request.user)
+        
+        return render(request, 'passchange.html', {'form' : form}) 
+    else:
+        return redirect('signin')
+

@@ -15,7 +15,7 @@
     <h2 class="my-5 text-center"> Welcome to Epic Rides  </h2>
     
     {% if pageTitle == 'update' %}  
-        <form class="col-6 m-auto" method="post">
+        <form class="col-6 m-auto border border-primary p-5 rounded" method="post">
             <label class="form-label">Username</label>
             <input class="form-control" value=" {{ request.user }} " disabled >
             <br>
