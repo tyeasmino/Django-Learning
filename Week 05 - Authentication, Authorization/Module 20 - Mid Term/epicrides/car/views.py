@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from . import forms, models 
+from caruser.models import PlaceOrderModel
 from django.contrib import messages
 from django.urls import reverse_lazy 
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+
 
 # Create your views here.
 class addCarBrandCreateView(CreateView):
@@ -72,3 +74,19 @@ class carDetailsView(DetailView):
         context['comments'] = comments 
         context['comment_form'] = comment_form
         return context
+
+    
+
+def placeOrder(request, id):
+    carOrdered = models.CarModel.objects.get(pk = id) 
+
+    if carOrdered.quantity > 0:
+        carOrdered.quantity -= 1
+        carOrdered.save() 
+    order = PlaceOrderModel.objects.create(car=carOrdered, carOwner=request.user)
+
+    messages.success(request, "Car Ordered Successfully")
+
+    
+    # car = PlaceOrderModel.objects.get(carOwner=request.user)
+    return render(request, 'user_profile.html', {'car': carOrdered}) 

@@ -6,6 +6,9 @@ urlpatterns = [
     path('carDetails/<int:id>/', views.carDetailsView.as_view(), name='carDetails'), 
 
 
+    path('placeOrder/<int:id>/', views.placeOrder, name='placeOrder'), 
+
+
     # path('edit/<int:id>/', views.updateInvestigationUpdateView.as_view(), name='edit_investigations'),  
     # path('delete/<int:id>/', views.deleteInvestigationDeleteView.as_view(), name='delete_investigations'), 
 ]

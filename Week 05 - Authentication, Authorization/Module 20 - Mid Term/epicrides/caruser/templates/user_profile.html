@@ -24,6 +24,22 @@
             <button class="btn btn-success" type="Submit">Update</button>
         </form>
     {% endif %}
+
+ 
+    {% if car is not Null %}
+    <div class="card p-0 " style="width: 25rem;">
+        <img src="{{ car.car_img.url }}" class="card-img-top h-75" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"> {{ car.car_name }} </h5>
+          <h6 class="card-title"> {{ car.brand }} </h6>
+          <p class="card-text"> 
+            Price: Starting at <strong>${{ car.price }}</strong> <br>
+            Quantity: <strong>1</strong> <br>
+            {{ car.description }}  
+          </p>
+        </div>
+    </div>   
+    {% endif %}
 </div> 
 
 {% endblock content %}

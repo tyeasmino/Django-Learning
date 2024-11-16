@@ -65,7 +65,7 @@ class CarUserProfileCreateView(CreateView):
     model = User
     form_class = forms.CarUserUpdateInfofForm
     template_name = 'user_profile.html'
-
+ 
  
 @method_decorator(login_required, name='dispatch')
 class CarUserEditProfile(UpdateView):
