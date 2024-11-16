@@ -26,20 +26,23 @@
     {% endif %}
 
  
-    {% if car is not Null %}
-    <div class="card p-0 " style="width: 25rem;">
-        <img src="{{ car.car_img.url }}" class="card-img-top h-75" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"> {{ car.car_name }} </h5>
-          <h6 class="card-title"> {{ car.brand }} </h6>
-          <p class="card-text"> 
-            Price: Starting at <strong>${{ car.price }}</strong> <br>
-            Quantity: <strong>1</strong> <br>
-            {{ car.description }}  
-          </p>
-        </div>
-    </div>   
-    {% endif %}
+    {% comment %} {% if car is not Null %} {% endcomment %}
+    
+        {% for order in user_ordered %}
+            <div class="card p-0 m-3" style="width: 25rem;">
+                <img src="{{ order.car.car_img.url }}" class="card-img-top h-75" alt="...">
+                <div class="card-body">
+                <h5 class="card-title"> {{ order.car.car_name }} </h5>
+                <h6 class="card-title"> {{ order.car.brand }} </h6>
+                <p class="card-text"> 
+                    Price: Ordered at <strong>${{ order.car.price }}</strong>  
+                </p>
+                <a href=" {% url 'carDetails' order.car.id %} " class="btn btn-primary">View Details</a>
+                </div>
+            </div>   
+        
+        {% endfor %}
+    {% comment %} {% endif %} {% endcomment %}
 </div> 
 
 {% endblock content %}

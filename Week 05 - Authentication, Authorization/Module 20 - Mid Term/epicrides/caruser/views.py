@@ -62,9 +62,14 @@ class CarUserLogoutCreateView(LogoutView):
 
 @method_decorator(login_required, name='dispatch')
 class CarUserProfileCreateView(CreateView):
-    model = User
+    model = models.PlaceOrderModel
     form_class = forms.CarUserUpdateInfofForm
     template_name = 'user_profile.html'
+
+    def get_context_data(self, **kwargs): 
+        context = super().get_context_data(**kwargs) 
+        context['user_ordered'] = models.PlaceOrderModel.objects.filter(carOwner=self.request.user) 
+        return context
  
  
 @method_decorator(login_required, name='dispatch')
@@ -102,4 +107,3 @@ def update_pass(request):
         return render(request, 'passchange.html', {'form' : form}) 
     else:
         return redirect('signin')
-

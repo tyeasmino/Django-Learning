@@ -44,9 +44,6 @@
   Total Car Found <span class="badge text-bg-secondary"> {{ car | length }} </span>
 </button>
 <div class="py-5">
-  
-
- 
     <a href=" {% url 'home' %} " style="font-size: 18px" class="btn btn-outline-secondary mx-1 "> All </a>
       {% for i in carBrand %}
         <a href=" {% url 'brand_wise_cars' i.slug %} " style="font-size: 18px" class="btn btn-outline-secondary mx-1 "> {{ i }} </a>

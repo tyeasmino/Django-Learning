@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import forms, models 
 from caruser.models import PlaceOrderModel
 from django.contrib import messages
@@ -86,7 +86,4 @@ def placeOrder(request, id):
     order = PlaceOrderModel.objects.create(car=carOrdered, carOwner=request.user)
 
     messages.success(request, "Car Ordered Successfully")
-
-    
-    # car = PlaceOrderModel.objects.get(carOwner=request.user)
-    return render(request, 'user_profile.html', {'car': carOrdered}) 
+    return redirect('profile')
