@@ -51,26 +51,34 @@
         <h4> <span class="text-primary"> {{ investigationData | length }}  </span> investigations found </h4>
       </div>
       <div class="row">
-        {% for i in investigationData %}
+       
           <div class="col-sm-3 my-3">
-           
-            <div class="card">
-              <img src=" {{ i.investigation_slip_img.url }} " class="card-img-top">
-              <div class="card-body">
-                <div class="card-title"> 
-                  <div class="d-flex justify-content-between">
-                    <h5> {{i.location.name}} </h5>
-                    <h6 class="text-secondary"> {{i.marketing_executive }} </h6>
-                  </div>
-                  <h6  > {{i.diagnostic_center.name}} </h6>
-                </div>
-                <p class="card-text">
-                    <hr> 
-                    <p>  <a class="text-decoration-none text-dark" href=" {% url 'detail_investigation' i.id %} "> {{i.patient_name}}  </a> - {{ i.age }}Y </p>
-                    
-                    <button class="btn btn-info" disabled > {{i.test_details}} </button> 
-                    <p class="d-flex justify-content-between mt-2"> {{i.rate}} 
-                        {% if i.payment_status == 'D' %}
+
+            <table class="table">
+              <thead>
+                <tr> 
+                  <th scope="col">Location</th>
+                  <th scope="col">Marketing Executive</th>
+                  <th scope="col">DC</th>
+                  <th scope="col">Patient Name</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Test Details</th>
+                  <th scope="col">Rate</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in investigationData %}
+                <tr> 
+                  <td>{{i.location.name}}</td>
+                  <td>{{i.marketing_executive }}</td>
+                  <td>{{i.diagnostic_center.name}} </td>
+                  <td> {{i.patient_name}}   </td>
+                  <td>{{ i.age }}Y   </td>
+                  <td> {{i.test_details}}  </td>
+                  <td>  {{i.rate}}  </td>
+                  <td>  
+                    {% if i.payment_status == 'D' %}
                         <a href="#" class="btn btn-danger">
                             Due
                         </a>
@@ -78,14 +86,15 @@
                         <button class="btn btn-success" disabled>
                             Paid
                         </button>
-                        {% endif %}
-                    </p> 
-                </p>
-              </div>
-            </div>
-
-          </div>
-        {% endfor %}       
+                        {% endif %}  </td>
+                </tr>
+                {% endfor %}    
+              </tbody>
+            </table>
+            
+           
+            
+      
   </div>
   </div>
 </div>
