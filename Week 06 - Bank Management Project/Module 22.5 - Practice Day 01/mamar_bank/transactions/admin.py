@@ -13,3 +13,6 @@ class TransactionAdmin(admin.ModelAdmin):
 
         obj.account.save()
         super().save_model(request, obj, form, change)
+
+    
+ 

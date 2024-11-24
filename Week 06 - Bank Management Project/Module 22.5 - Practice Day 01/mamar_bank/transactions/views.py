@@ -2,19 +2,22 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
-from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID
+from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID, TRANSFER_MONEY, RECEIVED_MONEY
 from datetime import datetime
 from django.db.models import Sum
 from transactions.forms import (
     DepositForm,
     WithdrawForm,
-    LoanRequestForm,
+    LoanRequestForm, 
+    TransferForm
 )
-from transactions.models import Transaction
+from transactions.models import Transaction 
+from accounts.models import UserBankAccount
+
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transactions/transaction_form.html'
@@ -37,7 +40,6 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
 
         return context
 
-
 class DepositMoneyView(TransactionCreateMixin):
     form_class = DepositForm
     title = 'Deposit'
@@ -49,9 +51,6 @@ class DepositMoneyView(TransactionCreateMixin):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
         account = self.request.user.account
-        # if not account.initial_deposit_date:
-        #     now = timezone.now()
-        #     account.initial_deposit_date = now
         account.balance += amount # amount = 200, tar ager balance = 0 taka new balance = 0+200 = 200
         account.save(
             update_fields=[
@@ -78,24 +77,48 @@ class WithdrawMoneyView(TransactionCreateMixin):
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
 
-        bankruptured = True
-        if bankruptured:
-            messages.success(
-            self.request,
-            f'Bankruptured, you cannot withdrawn any account'
-        ) 
-        else:
-            self.request.user.account.balance -= form.cleaned_data.get('amount')
-            # balance = 300
-            # amount = 5000
-            self.request.user.account.save(update_fields=['balance'])
+        self.request.user.account.balance -= form.cleaned_data.get('amount')
+        # balance = 300
+        # amount = 5000
+        self.request.user.account.save(update_fields=['balance'])
 
-            messages.success(
-                self.request,
-                f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
-            )
+        messages.success(
+            self.request,
+            f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
+        )
 
         return super().form_valid(form)
+
+
+class TransferMoneyView(TransactionCreateMixin):
+    title = 'Transfer Money'
+    form_class = TransferForm
+
+    def get_initial(self):
+        initial = {'transaction_type': TRANSFER_MONEY}
+        return initial
+
+    def form_valid(self, form):
+        account_no = form.cleaned_data.get('account_no')
+        amount = form.cleaned_data.get('amount')
+
+        sender = self.request.user.account 
+        sender.balance -= amount
+        sender.save(update_fields=['balance'])
+
+        receiver = UserBankAccount.objects.get(account_no=account_no)        
+        receiver.balance += amount
+        receiver.save(update_fields=['balance'])
+
+        Transaction(amount=amount, transaction_type=RECEIVED_MONEY, account=receiver, balance_after_transaction=receiver.balance).save()
+
+        messages.success(
+            self.request,
+            f'{amount} taka transfered to {account_no} no account'
+        )
+
+        return super().form_valid(form)
+
 
 class LoanRequestView(TransactionCreateMixin):
     form_class = LoanRequestForm
