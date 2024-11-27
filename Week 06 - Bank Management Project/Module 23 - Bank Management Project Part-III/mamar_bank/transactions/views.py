@@ -19,6 +19,21 @@ from transactions.models import Transaction
 from accounts.models import UserBankAccount
 
 
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
+def send_transaction_email(user, amount, mail_subject, template_name):
+    message = render_to_string(template_name, {
+        'user' : user,
+        'amount' : amount,
+    }) 
+
+    send_email = EmailMultiAlternatives(mail_subject, '' ,to=[user.email])
+    send_email.attach_alternative(message, "text/html") 
+    send_email.send() 
+
+
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transactions/transaction_form.html'
     model = Transaction
@@ -63,6 +78,7 @@ class DepositMoneyView(TransactionCreateMixin):
             f'{"{:,.2f}".format(float(amount))}$ was deposited to your account successfully'
         )
 
+        send_transaction_email(self.request.user, amount, 'Deposite Information', 'transactions/deposite_email.html')
         return super().form_valid(form)
 
 
@@ -87,6 +103,7 @@ class WithdrawMoneyView(TransactionCreateMixin):
             f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
         )
 
+        send_transaction_email(self.request.user, amount, 'Withdrawal Information', 'transactions/withdrawal_email.html')
         return super().form_valid(form)
 
 
@@ -139,6 +156,7 @@ class LoanRequestView(TransactionCreateMixin):
             f'Loan request for {"{:,.2f}".format(float(amount))}$ submitted successfully'
         )
 
+        send_transaction_email(self.request.user, amount, 'Loan Request Information', 'transactions/loan_request_email.html')
         return super().form_valid(form)
     
 class TransactionReportView(LoginRequiredMixin, ListView):
