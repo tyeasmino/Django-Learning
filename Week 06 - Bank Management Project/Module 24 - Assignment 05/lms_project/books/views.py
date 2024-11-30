@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . import forms, models  
 from django.contrib import messages
 from django.urls import reverse_lazy 
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView 
 from transactions.models import Transaction
+from transactions.constants import BORROW_BOOK, RETURN_BOOK
 
 # Create your views here.
 class addBookCategoryView(CreateView):
@@ -83,34 +84,107 @@ class bookDetailsView(DetailView):
 
 
 class borrowBookView(DetailView):
-    model = Transaction
-    template_name = 'transactions/transaction_report.html'    
+    model = models.BookModel
+    template_name = 'books/books_details.html'    
     pk_url_kwarg = 'id' 
-
-    # def post(self, request, *args, **kwargs):
-    #     comment_form = forms.CommentsForm(data= self.request.POST)
-    #     car = self.get_object()
-
-    #     if comment_form.is_valid():
-    #         new_comment = comment_form.save(commit=False)
-    #         new_comment.car = car 
-    #         new_comment.save() 
-    #     return self.get(request, *args, **kwargs)
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-     
-        # comments = car.comments.all()  
-        # comment_form = forms.CommentsForm()
+        book = self.object
 
-        account_balance = self.request.user.account.balance 
-        print(account_balance )  
+        
+        if(self.request.user.account.balance >= book.price):
+            self.request.user.account.balance = self.request.user.account.balance - book.price 
+            book.quantity = book.quantity - 1
+                
+            self.request.user.account.save(
+                update_fields=[
+                    'balance'
+                ]
+            )
+            book.save(
+                update_fields=[
+                    'quantity'
+                ]
+            )
 
+            models.BookBorrowModel.objects.create(
+                book_name = self.object,
+                borrowed_by = self.request.user, 
+                balance_after_transaction = self.request.user.account.balance,
+                transaction_type = BORROW_BOOK
+            )
+        
+            messages.success(self.request, "You have successfully borrowed this book!")
+        else:
+            messages.success(self.request, "Sorry!!! You don't have sufficent balance to borrowed this book!")
+
+        
+        context['book'] = book 
 
         context.update({
-            'account': self.request.user.account
-        })
-        # context['comments'] = comments 
-        # context['comment_form'] = comment_form
+            'account': self.request.user.account,
+            'book': book
+        }) 
+        return context 
+
+
+class borrowReportView(ListView):
+    model = models.BookBorrowModel 
+    template_name = 'books/borrow_report.html' 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        report = models.BookBorrowModel.objects.all()  
+
+
+        context['report'] = report  
         return context
+    
+
+class returnBookView(DetailView):
+    model = models.BookBorrowModel 
+    template_name = 'books/borrow_report.html'    
+    pk_url_kwarg = 'id' 
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book_borrow = self.object
+        book = book_borrow.book_name  
+
+        self.request.user.account.balance += book.price 
+        book.quantity += 1
+            
+        self.request.user.account.save(
+            update_fields=[
+                'balance'
+            ]
+        )
+        book.save(
+            update_fields=[
+                'quantity'
+            ]
+        )
+
+        models.BookBorrowModel.objects.create(
+            book_name = book,
+            borrowed_by = self.request.user, 
+            balance_after_transaction = self.request.user.account.balance,
+            transaction_type = RETURN_BOOK
+        )
+
+        book_borrow.is_returned = True
+        book_borrow.save(
+            update_fields=[
+                'is_returned'
+            ]
+        )
+    
+        messages.success(self.request, "You have successfully returned this book and refund is successful!") 
+        report = models.BookBorrowModel.objects.all()  
+        context['report'] = report  
+
+        return context 
+

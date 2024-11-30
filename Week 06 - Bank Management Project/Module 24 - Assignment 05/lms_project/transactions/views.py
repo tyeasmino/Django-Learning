@@ -138,7 +138,7 @@ class DepositMoneyView(TransactionCreateMixin):
 #         send_transaction_email(self.request.user, amount, 'Loan Request Information', 'transactions/loan_request_email.html')
 #         return super().form_valid(form)
     
-class TransactionReportView(LoginRequiredMixin, ListView):
+class TransactionReportView(LoginRequiredMixin, ListView): 
     template_name = 'transactions/transaction_report.html'
     model = Transaction
     balance = 0 # filter korar pore ba age amar total balance ke show korbe

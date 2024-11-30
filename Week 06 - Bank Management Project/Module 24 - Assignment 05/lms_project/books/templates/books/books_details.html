@@ -15,7 +15,7 @@
       <div class="flex justify-between">
         <div class="flex gap-6">
           <p> <span> Price: </span> <span class="font-bold">  {{ book.price }} Taka </span> </p>
-          <p> <span> Quantity: </span> <span class="font-bold"> {{ book.quantity }} </span> </p>
+          <p> <span class=""> Quantity: </span> <span class="font-bold"> {{ book.quantity }} </span> </p>
         </div>
          
         {% if request.user.is_authenticated and not request.user.is_superuser %}
@@ -25,7 +25,7 @@
             rounded-lg text-sm px-5 py-1 me-2 mb-2 
             dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Borrow Book</a>
           {% else %}
-            <button class="btn btn-danger" disabled>Book is out of stock</button>
+            <button class="text-danger" disabled>Book is out of stock</button>
           {% endif %}
         {% endif %}
       </div>
@@ -33,6 +33,5 @@
 </div>
 
  
-
-
+ 
 {% endblock %}
