@@ -3,7 +3,7 @@ from . import forms, models
 from django.contrib import messages
 from django.urls import reverse_lazy 
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-
+from transactions.models import Transaction
 
 # Create your views here.
 class addBookCategoryView(CreateView):
@@ -50,3 +50,67 @@ class addBookDetailsView(CreateView):
             })
     
         return form
+
+
+    
+class bookDetailsView(DetailView):
+    model = models.BookModel
+    template_name = 'books/books_details.html'    
+    pk_url_kwarg = 'id' 
+
+    # def post(self, request, *args, **kwargs):
+    #     comment_form = forms.CommentsForm(data= self.request.POST)
+    #     car = self.get_object()
+
+    #     if comment_form.is_valid():
+    #         new_comment = comment_form.save(commit=False)
+    #         new_comment.car = car 
+    #         new_comment.save() 
+    #     return self.get(request, *args, **kwargs)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = self.object
+        # comments = car.comments.all()  
+        # comment_form = forms.CommentsForm()
+
+
+        context['book'] = book 
+        # context['comments'] = comments 
+        # context['comment_form'] = comment_form
+        return context
+
+
+class borrowBookView(DetailView):
+    model = Transaction
+    template_name = 'transactions/transaction_report.html'    
+    pk_url_kwarg = 'id' 
+
+    # def post(self, request, *args, **kwargs):
+    #     comment_form = forms.CommentsForm(data= self.request.POST)
+    #     car = self.get_object()
+
+    #     if comment_form.is_valid():
+    #         new_comment = comment_form.save(commit=False)
+    #         new_comment.car = car 
+    #         new_comment.save() 
+    #     return self.get(request, *args, **kwargs)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+     
+        # comments = car.comments.all()  
+        # comment_form = forms.CommentsForm()
+
+        account_balance = self.request.user.account.balance 
+        print(account_balance )  
+
+
+        context.update({
+            'account': self.request.user.account
+        })
+        # context['comments'] = comments 
+        # context['comment_form'] = comment_form
+        return context

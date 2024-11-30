@@ -20,14 +20,20 @@
 </div>
 
 
-<button type="button" class="btn btn-primary mt-5">
-    Total Book Found <span class="badge text-bg-secondary"> {{ book | length }} </span>
+<button type="button" class="inline-flex items-center px-5 py-3 mb-5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+  Total Book Found
+  <span class="inline-flex items-center mx-2 justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+    {{ book | length }}
+  </span>
   </button>
+  
+
+ 
 
 <br>
-  <a href=" {% url 'home' %} " style="font-size: 18px" class="btn btn-outline-secondary mx-1 "> All </a>
+  <a href=" {% url 'home' %} " style="font-size: 18px" class="btn btn-outline-secondary hover:text-white mx-1 font-bold"> All </a>
       {% for i in category %}
-        <a href="  " style="font-size: 18px" class="btn btn-outline-secondary mx-4 "> {{ i }} </a>
+        <a href="  " style="font-size: 18px" class=" hover:text-white mx-4 font-bold"> {{ i }} </a>
       {% endfor %} 
     <hr> 
 <div class="container flex gap-4 mx-auto">
@@ -37,19 +43,23 @@
 
 
   <div class="py-5">
-        <div class="row flex gap-5 p-2 ">
+        <div class="row flex flex-wrap justify-center gap-5 p-2 ">
           {% for b in book %}
-           <div class="card p-0 my-2" style="width: 18rem;">
-            <img src="{{ b.book_img.url }}" class="card-img-top h-75" alt="...">
-            <div class="card-body">
-              <h5 class="card-title"> {{ b.book_name }} </h5>
-              <h6 class="card-title"> {{ b.category }} </h6>
-              <p class="card-text"> 
-                Price: Starting at <strong>${{ b.price }}</strong> <br>
-                Quantity: <strong>{{ b.quantity }}</strong> <br>
-                {{ b.description | truncatechars:50 }}  
-              </p>
-              <a href=" {  " class="btn btn-primary">Borrow Book</a>
+           <div class="card shadow-md rounded-md p-5 my-2" style="width: 25rem;">
+            <img src="{{ b.book_img.url }}" class="card-img-top" style="height: 150px;">
+            <div class="card-body mt-5">
+              <h5 class="card-title font-bold"> {{ b.book_name }} </h5>
+
+              <span class="card-title font-bold"> Category: </span> <span>  {{ b.category }} </span> <br>
+              <span class="card-text font-bold"> Price: </span> <span>  {{ b.price }} Taka </span> <br>
+              <span class="card-text font-bold"> Quantity: </span> <span> {{ b.quantity }} </span> <br>
+              <p class="card-text">   {{ b.description | truncatechars:70 }}  </p>
+              <a href=" {% url 'bookDetails' b.id %} " class="">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-2 px-4 rounded">
+                  Details
+                </button>
+              </a>
+              
             </div>
           </div>  
           {% endfor %}

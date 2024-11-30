@@ -80,29 +80,7 @@ class DepositMoneyView(TransactionCreateMixin):
         return super().form_valid(form)
 
 
-# class WithdrawMoneyView(TransactionCreateMixin):
-#     form_class = WithdrawForm
-#     title = 'Withdraw Money'
-
-#     def get_initial(self):
-#         initial = {'transaction_type': WITHDRAWAL}
-#         return initial
-
-#     def form_valid(self, form):
-#         amount = form.cleaned_data.get('amount')
-
-#         self.request.user.account.balance -= form.cleaned_data.get('amount')
-#         # balance = 300
-#         # amount = 5000
-#         self.request.user.account.save(update_fields=['balance'])
-
-#         messages.success(
-#             self.request,
-#             f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
-#         )
-
-#         send_transaction_email(self.request.user, amount, 'Withdrawal Information', 'transactions/withdrawal_email.html', self.request.user)
-#         return super().form_valid(form)
+ 
 
 
 # class TransferMoneyView(TransactionCreateMixin):

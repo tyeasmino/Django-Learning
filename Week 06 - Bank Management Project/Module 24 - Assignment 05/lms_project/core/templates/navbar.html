@@ -22,12 +22,12 @@
             <div class="flex w-auto">
                 <div class="text-indigo-300 my-auto font-black px-5">Welcome, {{request.user}}  - {{ request.user.account.balance }} </div>
 
-                <a href=" {% url 'profile' %} " class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark hover:bg-indigo-800 mt-4 lg:mt-0">Profile</a>
-                <a href=" {% url 'change_password' %} " class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark hover:bg-indigo-800 mt-4 lg:mt-0">Change Password</a>
+                <a href=" {% url 'profile' %} " class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark hover:bg-indigo-300 mt-4 lg:mt-0">Profile</a>
+                <a href=" {% url 'change_password' %} " class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark hover:bg-indigo-300 mt-4 lg:mt-0">Change Password</a>
             
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark  hover:bg-indigo-800 mt-4 lg:mt-0">Logout</button>
+                    <button type="submit" class="mx-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-indigo-800 rounded text-white border-white hover:border-transparent hover:text-dark  hover:bg-indigo-300 mt-4 lg:mt-0">Logout</button>
                 </form>
             
             </div>
