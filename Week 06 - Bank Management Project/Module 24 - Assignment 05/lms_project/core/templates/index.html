@@ -33,7 +33,7 @@
 <br>
   <a href=" {% url 'home' %} " style="font-size: 18px" class="btn btn-outline-secondary hover:text-white mx-1 font-bold"> All </a>
       {% for i in category %}
-        <a href="  " style="font-size: 18px" class=" hover:text-white mx-4 font-bold"> {{ i }} </a>
+        <a href=" {% url 'category_wise_books' i.slug %} " style="font-size: 18px" class=" hover:text-white mx-4 font-bold"> {{ i }} </a>
       {% endfor %} 
     <hr> 
 <div class="container flex gap-4 mx-auto">

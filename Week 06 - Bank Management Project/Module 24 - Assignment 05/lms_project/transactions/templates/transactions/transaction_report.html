@@ -69,10 +69,10 @@
           </span>
         </td>
         <td class="px-4 py-2">
-          $ {{ transaction.amount|floatformat:2|intcomma }}
+          {{ transaction.amount|floatformat:2|intcomma }}
         </td>
         <td class="px-4 py-2">
-          $ {{ transaction.balance_after_transaction|floatformat:2|intcomma }}
+          {{ transaction.balance_after_transaction|floatformat:2|intcomma }}
         </td>
       </tr>
       {% endfor %}

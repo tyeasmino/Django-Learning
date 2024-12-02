@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib import messages
 from django.views.generic import FormView
 from .forms import UserRegistrationForm,UserUpdateForm
 from django.contrib.auth import login, logout
@@ -10,7 +11,17 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required 
 
 from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string 
+
+def send_transaction_email(user, account_no, mail_subject, template_name):
+    message = render_to_string(template_name, {
+        'user' : user,
+        'account_no' : account_no
+    }) 
+
+    send_email = EmailMultiAlternatives(mail_subject, '' ,to=[user.email])
+    send_email.attach_alternative(message, "text/html") 
+    send_email.send() 
 
 
 class UserRegistrationView(FormView):
@@ -23,12 +34,18 @@ class UserRegistrationView(FormView):
         user = form.save()
         login(self.request, user)
         print(user)
-        return super().form_valid(form) # form_valid function call hobe jodi sob thik thake
+        
+
+        send_transaction_email(self.request.user, self.request.user.account.account_no, 'Registration Information', 'messages/registration_email.html')
+        messages.success(self.request, "Congratulations!! Your registration has been done successfully")
+        return super().form_valid(form) 
     
 
 class UserLoginView(LoginView):
     template_name = 'accounts/user_login.html'
     def get_success_url(self):
+        messages.success(self.request, "Login Successful")
+        
         return reverse_lazy('home')
 
 
@@ -36,6 +53,7 @@ class UserLogoutView(LogoutView):
     def get_success_url(self):
         if self.request.user.is_authenticated:
             logout(self.request)
+        messages.success(self.request, "Logout Successful")
         return reverse_lazy('home')
 
 
@@ -51,6 +69,8 @@ class UserBankAccountUpdateView(View):
         if form.is_valid():
             form.save()
             return redirect('profile')  # Redirect to the user's profile page
+        
+        messages.success(self.request, "Profile updated Successfully")
         return render(request, self.template_name, {'form': form})
     
     
@@ -76,15 +96,14 @@ class ChangePasswordView(PasswordChangeView):
         return form
     
     def form_valid(self, form):
-        mail_subject = "Password Changed Successfully"
+       
         message = render_to_string('accounts/password_email.html', {
             'user' : self.request.user
         })
-        to_email = self.request.user.email 
-        send_email = EmailMultiAlternatives(mail_subject, '', to=[to_email])
-        send_email.attach_alternative(message, "text/html")
-        send_email.send()
+        
 
+        messages.success(self.request, "Password updated Successfully")
+        send_transaction_email(self.request.user, self.request.user.account.account_no, 'Password Changed Information', 'messages/passwordUpdate_email.html')
         return super().form_valid(form)
     
 

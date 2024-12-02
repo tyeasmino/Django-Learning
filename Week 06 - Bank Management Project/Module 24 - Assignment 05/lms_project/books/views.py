@@ -7,6 +7,20 @@ from transactions.models import Transaction
 from transactions.constants import BORROW_BOOK, RETURN_BOOK
 
 # Create your views here.
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
+def send_transaction_email(user, amount, mail_subject, template_name):
+    message = render_to_string(template_name, {
+        'user' : user,
+        'amount' : amount
+    }) 
+
+    send_email = EmailMultiAlternatives(mail_subject, '' ,to=[user.email])
+    send_email.attach_alternative(message, "text/html") 
+    send_email.send() 
+
 class addBookCategoryView(CreateView):
     model = models.BookCategoryModel
     form_class = forms.BookCategoryForm
@@ -20,7 +34,6 @@ class addBookCategoryView(CreateView):
     def form_invalid(self, form):
         messages.success(self.request, "Book Category adding process failed!")
         return super().form_invalid(form)
-
 
 
 class addBookDetailsView(CreateView):
@@ -62,12 +75,13 @@ class bookDetailsView(DetailView):
         comment_form = forms.CommentsForm(data= self.request.POST)
         book = self.get_object()
 
-        is_borrowed = models.BookBorrowModel.objects.filter(borrowed_by=request.user, book_name=book).exists()
+        if request.user.is_authenticated:
+            is_borrowed = models.BookBorrowModel.objects.filter(borrowed_by=self.request.user, book_name=book).exists()
 
-        if not is_borrowed:
-            # messages.success(self.request, "You have successfully returned this book and refund is successful!") 
-            messages.warning(self.request, "You must borrow the book before leaving a review.")
-            return redirect('book_detail', id=book.id)
+            if not is_borrowed:
+                # messages.success(self.request, "You have successfully returned this book and refund is successful!") 
+                messages.warning(self.request, "You must borrow the book before leaving a review.")
+                return redirect('book_detail', id=book.id)
 
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
@@ -97,7 +111,14 @@ class bookDetailsView(DetailView):
         context['book'] = book 
         context['comments'] = comments 
         context['comment_form'] = comment_form
-        context['is_borrowed'] =  models.BookBorrowModel.objects.filter(borrowed_by=self.request.user, book_name=book).exists()
+
+
+        
+        if self.request.user.is_authenticated:
+            context['is_borrowed'] = models.BookBorrowModel.objects.filter(borrowed_by=self.request.user, book_name=book).exists()
+        else:
+            context['is_borrowed'] = False   
+
         return context
 
   
@@ -135,8 +156,10 @@ class borrowBookView(DetailView):
             )
         
             messages.success(self.request, "You have successfully borrowed this book!")
+            send_transaction_email(self.request.user, book, 'Book Borrow Information', 'messages/borrow_book_email.html')
+        
         else:
-            messages.success(self.request, "Sorry!!! You don't have sufficent balance to borrowed this book!")
+            messages.success(self.request, "Sorry!!! You don't have sufficent balance to borrow this book!")
 
         
 
@@ -151,7 +174,6 @@ class borrowBookView(DetailView):
                     'focus:bg-white focus:border-gray-500'
                 )
             })
-
 
         context['book'] = book 
         context['comments'] = comments 
@@ -218,6 +240,7 @@ class returnBookView(DetailView):
             ]
         )
     
+        send_transaction_email(self.request.user, book, 'Return Book Information', 'messages/returned_book_email.html')
         messages.success(self.request, "You have successfully returned this book and refund is successful!") 
         report = models.BookBorrowModel.objects.all()  
         context['report'] = report  

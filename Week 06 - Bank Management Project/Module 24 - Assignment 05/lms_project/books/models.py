@@ -18,7 +18,7 @@ class BookModel(models.Model):
     quantity = models.IntegerField()
     price = models.IntegerField() 
     category = models.ForeignKey(BookCategoryModel, on_delete=models.CASCADE)
-    book_img = models.ImageField(upload_to='car/media/uploads/')
+    book_img = models.ImageField(upload_to='book/media/uploads/')
 
     def __str__(self):
         return f'{self.category} - {self.book_name} - ${self.price}'
@@ -49,8 +49,8 @@ class CommentModel(models.Model):
         ('5', 'Rating 5'),
     ]
     book_rating = models.CharField(max_length=1, choices=rates)
-    commented_on = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Commented by - {self.commented_by}'
+        return f'Commented by - {self.commented_by} - {self.timestamp}'
         
