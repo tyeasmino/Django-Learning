@@ -9,10 +9,6 @@ urlpatterns = [
     path('report', views.borrowReportView.as_view(), name='borrowreport'), 
 
 
-
-
-
-
     # path('edit/<int:id>/', views.updateInvestigationUpdateView.as_view(), name='edit_investigations'),  
     # path('delete/<int:id>/', views.deleteInvestigationDeleteView.as_view(), name='delete_investigations'), 
 ]

@@ -4,8 +4,6 @@ urlpatterns = [
     path('addCarBrand/', views.addCarBrandCreateView.as_view(), name='addCarBrand'), 
     path('addCarDetails/', views.addCarDetailsCreateView.as_view(), name='addCarDetails'), 
     path('carDetails/<int:id>/', views.carDetailsView.as_view(), name='carDetails'), 
-
-
     path('placeOrder/<int:id>/', views.placeOrder, name='placeOrder'), 
 
 

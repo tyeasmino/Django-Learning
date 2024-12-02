@@ -52,47 +52,65 @@ class addBookDetailsView(CreateView):
     
         return form
 
-
     
 class bookDetailsView(DetailView):
     model = models.BookModel
     template_name = 'books/books_details.html'    
     pk_url_kwarg = 'id' 
 
-    # def post(self, request, *args, **kwargs):
-    #     comment_form = forms.CommentsForm(data= self.request.POST)
-    #     car = self.get_object()
+    def post(self, request, *args, **kwargs):
+        comment_form = forms.CommentsForm(data= self.request.POST)
+        book = self.get_object()
 
-    #     if comment_form.is_valid():
-    #         new_comment = comment_form.save(commit=False)
-    #         new_comment.car = car 
-    #         new_comment.save() 
-    #     return self.get(request, *args, **kwargs)
+        is_borrowed = models.BookBorrowModel.objects.filter(borrowed_by=request.user, book_name=book).exists()
 
+        if not is_borrowed:
+            # messages.success(self.request, "You have successfully returned this book and refund is successful!") 
+            messages.warning(self.request, "You must borrow the book before leaving a review.")
+            return redirect('book_detail', id=book.id)
 
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.book = book
+            new_comment.commented_by = self.request.user 
+            new_comment.save() 
+        return self.get(request, *args, **kwargs)
+
+ 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         book = self.object
-        # comments = car.comments.all()  
-        # comment_form = forms.CommentsForm()
+        comments = book.comments.all()  
+        comment_form = forms.CommentsForm()
+
+        for field in comment_form.fields.values():
+            field.widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })
 
 
         context['book'] = book 
-        # context['comments'] = comments 
-        # context['comment_form'] = comment_form
+        context['comments'] = comments 
+        context['comment_form'] = comment_form
+        context['is_borrowed'] =  models.BookBorrowModel.objects.filter(borrowed_by=self.request.user, book_name=book).exists()
         return context
 
-
+  
 class borrowBookView(DetailView):
     model = models.BookModel
     template_name = 'books/books_details.html'    
     pk_url_kwarg = 'id' 
-
+ 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         book = self.object
-
+        comments = book.comments.all()  
         
         if(self.request.user.account.balance >= book.price):
             self.request.user.account.balance = self.request.user.account.balance - book.price 
@@ -121,8 +139,26 @@ class borrowBookView(DetailView):
             messages.success(self.request, "Sorry!!! You don't have sufficent balance to borrowed this book!")
 
         
-        context['book'] = book 
 
+        comment_form = forms.CommentsForm()
+
+        for field in comment_form.fields.values():
+            field.widget.attrs.update({
+                'class': (
+                    'appearance-none block w-full bg-gray-200 '
+                    'text-gray-700 border border-gray-200 rounded '
+                    'py-3 px-4 leading-tight focus:outline-none '
+                    'focus:bg-white focus:border-gray-500'
+                )
+            })
+
+
+        context['book'] = book 
+        context['comments'] = comments 
+        context['comment_form'] = comment_form
+        context['is_borrowed'] =  models.BookBorrowModel.objects.filter(borrowed_by=self.request.user, book_name=book).exists()
+
+ 
         context.update({
             'account': self.request.user.account,
             'book': book

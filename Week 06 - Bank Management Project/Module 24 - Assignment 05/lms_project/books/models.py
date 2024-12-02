@@ -36,13 +36,21 @@ class BookBorrowModel(models.Model):
         return f'{self.borrowed_by} - {self.book_name.book_name}' 
 
 
-# # class CommentModel(models.Model):
-# #     car = models.ForeignKey(CarModel, on_delete=models.CASCADE, related_name='comments')
-# #     name = models.CharField(max_length=50)
-# #     email = models.EmailField()
-# #     comment = models.TextField()
-# #     commented_on = models.DateTimeField(auto_now_add=True)
 
-# #     def __str__(self):
-# #         return f'Commented by - {self.name}'
+class CommentModel(models.Model):
+    book = models.ForeignKey(BookModel, on_delete=models.CASCADE, related_name='comments')
+    commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    rates = [
+        ('1', 'Rating 1'),
+        ('2', 'Rating 2'),
+        ('3', 'Rating 3'),
+        ('4', 'Rating 4'),
+        ('5', 'Rating 5'),
+    ]
+    book_rating = models.CharField(max_length=1, choices=rates)
+    commented_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Commented by - {self.commented_by}'
         

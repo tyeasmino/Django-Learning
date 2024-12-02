@@ -18,7 +18,7 @@ class CarModel(models.Model):
     car_img = models.ImageField(upload_to='car/media/uploads/')
 
     def __str__(self):
-        return f'{self.brand} - {self.car_name} - ${self.price}'
+        return f'{self.brand} - {self.car_name} - {self.price}'
     
 
 class CommentModel(models.Model):
