@@ -1,0 +1,109 @@
+body { 
+    margin: auto;
+    background-color: rgb(210, 217, 223);
+}
+
+li {
+    list-style: none;
+}
+
+nav {
+    background-color: rgba(169, 169, 169, 0.158);
+}
+
+.menu-item {
+    font-size: 20px;
+}
+
+.menu-item:hover, a:hover {
+    color: rgb(4, 8, 241);
+    border-bottom: 2px solid rgb(4, 8, 241);
+}
+
+.banner-container {
+    width: 1200px;
+    margin: auto;
+    height: 500px;
+    padding: 30px;
+}
+
+.banner { 
+    padding: 0 30px;
+    box-shadow: 4px 4px 8px gray;
+    border-radius: 10px;
+    background: linear-gradient(rgba(88, 178, 194, 0.158), rgb(38, 35, 201));
+}
+
+.banner-img {
+    width: 100%;
+    margin-top: -50px;
+}
+
+.service-container {
+    width: 1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.service-title {
+    font-size: 50px;
+    color: rgb(169, 169, 169);
+}
+
+
+
+
+.doc-card {
+    width: 300px;
+    height: 380px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px gray;
+    text-align: center;
+    padding: 15px;
+}
+
+.doc-img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}
+
+
+#search {
+    padding: 10px;
+    border: none;
+    width: 75%;
+}
+
+.review-card {
+    width: 250px;
+    height: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 4px 4px 8px gray;
+}
+
+.review-card img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+
+footer {
+    padding: 50px;
+    background: rgba(169, 169, 169, 0.158);
+}
+
+
+.doctor-img img {
+    width: 150px;
+    height: 150px; 
+    border-radius: 50%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
